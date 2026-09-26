@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Muhammad Nadeem — Data Science</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#EBE9E1;
+    --ink:#1B1E1D;
+    --ink-soft:#4B524E;
+    --navy:#243646;
+    --signal:#1F8A8A;
+    --signal-ink:#0E4F4F;
+    --line:#C9C6BB;
+    --card:#F4F2EC;
+  }
+  :root:not([data-theme="light"]) {
+    @media (prefers-color-scheme: dark) {
+      --paper:#12161A;
+      --ink:#E7E9E6;
+      --ink-soft:#A8AFAA;
+      --navy:#9FC1D6;
+      --signal:#4FD3C4;
+      --signal-ink:#BFF3EA;
+      --line:#2C3338;
+      --card:#181D21;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#12161A;
+    --ink:#E7E9E6;
+    --ink-soft:#A8AFAA;
+    --navy:#9FC1D6;
+    --signal:#4FD3C4;
+    --signal-ink:#BFF3EA;
+    --line:#2C3338;
+    --card:#181D21;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth; scroll-padding-top:env(safe-area-inset-top,0px);}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'IBM Plex Sans', sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    padding-top:env(safe-area-inset-top,0px);
+    padding-bottom:env(safe-area-inset-bottom,0px);
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{
+    font-family:'Source Serif 4', serif;
+    font-weight:600;
+    margin:0;
+    color:var(--ink);
+  }
+  a{color:var(--signal-ink); text-decoration:none;}
+  a:hover{text-decoration:underline;}
+  a:focus-visible, button:focus-visible{outline:2px solid var(--signal); outline-offset:3px;}
+  .mono{font-family:'IBM Plex Mono', monospace;}
+
+  .layout{
+    display:grid;
+    grid-template-columns:220px minmax(0,1fr);
+    max-width:1180px;
+    margin:0 auto;
+  }
+  .rail{
+    position:sticky;
+    top:0;
+    height:100vh;
+    padding:48px 28px 28px 8px;
+    border-right:1px solid var(--line);
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+  }
+  .rail-top .initials{
+    width:44px; height:44px;
+    border:1.5px solid var(--ink);
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Source Serif 4', serif;
+    font-size:16px;
+    margin-bottom:28px;
+  }
+  .rail nav{display:flex; flex-direction:column; gap:14px;}
+  .rail nav a{
+    color:var(--ink-soft);
+    font-size:14.5px;
+    font-family:'IBM Plex Mono', monospace;
+  }
+  .rail nav a:hover, .rail nav a.active{color:var(--signal-ink); text-decoration:none;}
+  .rail-bottom{font-size:12.5px; color:var(--ink-soft); font-family:'IBM Plex Mono', monospace;}
+  .theme-toggle{
+    background:none; border:1px solid var(--line); color:var(--ink-soft);
+    font-family:'IBM Plex Mono', monospace; font-size:12px;
+    padding:6px 10px; border-radius:3px; cursor:pointer; margin-top:14px;
+  }
+  .theme-toggle:hover{border-color:var(--signal);}
+
+  .topbar{display:none;}
+
+  main{padding:0 40px;}
+  section{max-width:640px; padding:90px 0 0 40px;}
+  section:last-of-type{padding-bottom:90px;}
+
+  /* HERO */
+  .hero{padding-top:64px; display:flex; gap:36px; align-items:flex-start; max-width:760px;}
+  .hero-text{flex:1 1 340px;}
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px;
+    color:var(--signal-ink);
+    margin-bottom:18px;
+  }
+  .hero h1{font-size:clamp(30px,4vw,42px); line-height:1.15; letter-spacing:-0.01em;}
+  .hero p.sub{margin-top:18px; font-size:16.5px; color:var(--ink-soft); max-width:52ch;}
+  .hero-links{display:flex; flex-wrap:wrap; gap:10px 18px; margin-top:26px; font-size:14.5px;}
+  .hero-links a{color:var(--ink); border-bottom:1px solid var(--line); padding-bottom:2px;}
+  .hero-links a:hover{border-color:var(--signal); color:var(--signal-ink);}
+  .wave-wrap{flex:0 0 210px; padding-top:6px;}
+  .wave-wrap svg{width:100%; height:auto;}
+  .wave-path{
+    stroke-dasharray:600;
+    stroke-dashoffset:600;
+    animation:draw 1.8s ease-out forwards;
+    animation-delay:.2s;
+  }
+  @keyframes draw{to{stroke-dashoffset:0;}}
+  @media (prefers-reduced-motion:reduce){
+    .wave-path{animation:none; stroke-dashoffset:0;}
+  }
+
+  .kicker{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px;
+    color:var(--ink-soft);
+    text-transform:none;
+    margin-bottom:10px;
+  }
+  h2.section-title{font-size:26px; margin-bottom:26px;}
+
+  /* RESEARCH */
+  .research-card{
+    border:1px solid var(--line);
+    background:var(--card);
+    padding:26px 28px;
+    border-radius:2px;
+  }
+  .research-card h3{font-size:19px; line-height:1.35; font-weight:600;}
+  .research-card .meta{font-family:'IBM Plex Mono', monospace; font-size:12.5px; color:var(--ink-soft); margin-top:8px;}
+  .research-card p{margin-top:16px; color:var(--ink-soft); font-size:15px;}
+  .research-card .pub{
+    margin-top:18px; padding-top:16px; border-top:1px solid var(--line);
+    font-size:14px; color:var(--ink-soft);
+  }
+  .status-dot{display:inline-block; width:7px; height:7px; border-radius:50%; background:var(--signal); margin-right:7px; position:relative; top:-1px;}
+
+  /* PROJECTS */
+  .project{
+    border-top:1px solid var(--line);
+    padding:28px 0;
+  }
+  .project:first-of-type{border-top:1px solid var(--line);}
+  .project-head{display:flex; justify-content:space-between; align-items:baseline; gap:16px; flex-wrap:wrap;}
+  .project-head h3{font-size:19px;}
+  .project-year{font-family:'IBM Plex Mono', monospace; font-size:12.5px; color:var(--ink-soft); white-space:nowrap;}
+  .stack{font-family:'IBM Plex Mono', monospace; font-size:12.5px; color:var(--signal-ink); margin-top:8px;}
+  .project ul{margin:14px 0 0; padding-left:18px; color:var(--ink-soft); font-size:15px;}
+  .project li{margin-bottom:6px;}
+  .project li::marker{color:var(--signal);}
+
+  /* SKILLS */
+  .skill-row{
+    display:grid;
+    grid-template-columns:150px minmax(0,1fr);
+    gap:18px;
+    padding:14px 0;
+    border-top:1px solid var(--line);
+  }
+  .skill-row:last-child{border-bottom:1px solid var(--line);}
+  .skill-row .label{font-family:'IBM Plex Mono', monospace; font-size:13px; color:var(--ink-soft); padding-top:2px;}
+  .skill-row .items{font-size:15px;}
+  @media (max-width:520px){
+    .skill-row{grid-template-columns:1fr;}
+    .skill-row .label{padding-top:0;}
+  }
+
+  /* EDUCATION */
+  .edu-item{padding:18px 0; border-top:1px solid var(--line);}
+  .edu-item:last-child{border-bottom:1px solid var(--line);}
+  .edu-head{display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap;}
+  .edu-head h3{font-size:16.5px; font-weight:600;}
+  .edu-when{font-family:'IBM Plex Mono', monospace; font-size:12.5px; color:var(--ink-soft);}
+  .edu-item .degree{color:var(--ink-soft); font-size:14.5px; margin-top:3px;}
+
+  /* CONTACT */
+  .contact-grid{display:flex; flex-direction:column; gap:14px; font-size:16px; margin-top:8px;}
+  .contact-grid a{color:var(--ink); border-bottom:1px solid var(--line);}
+  .contact-grid a:hover{color:var(--signal-ink); border-color:var(--signal);}
+  footer{
+    max-width:640px; margin-left:40px; padding:30px 0 60px 40px;
+    font-family:'IBM Plex Mono', monospace; font-size:12.5px; color:var(--ink-soft);
+    border-top:1px solid var(--line);
+  }
+
+  @media (max-width:860px){
+    .layout{grid-template-columns:1fr;}
+    .rail{display:none;}
+    .topbar{
+      display:flex; justify-content:space-between; align-items:center;
+      padding:16px 20px; border-bottom:1px solid var(--line);
+      position:sticky; top:0; background:var(--paper); z-index:5;
+    }
+    .topbar .initials{
+      width:34px; height:34px; border:1.5px solid var(--ink); border-radius:50%;
+      display:flex; align-items:center; justify-content:center; font-family:'Source Serif 4', serif; font-size:13px;
+    }
+    .topbar button{
+      background:none; border:1px solid var(--line); color:var(--ink-soft);
+      font-family:'IBM Plex Mono', monospace; font-size:12px;
+      padding:6px 10px; border-radius:3px;
+    }
+    main{padding:0 18px;}
+    section{padding:56px 0 0 0; max-width:100%;}
+    .hero{flex-direction:column-reverse; gap:20px; padding-top:8px;}
+    .wave-wrap{flex:0 0 auto; width:150px;}
+    footer{margin-left:0; padding-left:0;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="initials">MN</div>
+  <button class="theme-toggle" id="toggleTop" aria-label="Toggle color theme">Aa</button>
+</div>
+
+<div class="layout">
+  <aside class="rail">
+    <div class="rail-top">
+      <div class="initials">MN</div>
+      <nav>
+        <a href="#work">Work</a>
+        <a href="#research">Research</a>
+        <a href="#skills">Skills</a>
+        <a href="#education">Education</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+    <div class="rail-bottom">
+      Islamabad, PK<br>
+      <button class="theme-toggle" id="toggleSide" aria-label="Toggle color theme">Aa · theme</button>
+    </div>
+  </aside>
+
+  <main>
+    <section class="hero" id="top">
+      <div class="hero-text">
+        <div class="eyebrow">Muhammad Nadeem</div>
+        <h1>I look for structure in noisy signals.</h1>
+        <p class="sub">M.S. Data Science student at Quaid-e-Azam University, with a Physics degree from PIEAS. My work moves between wave equations, document retrieval, and classification — different names for the same problem: finding the pattern underneath the noise.</p>
+        <div class="hero-links">
+          <a href="mailto:nadeemaadi451@gmail.com">nadeemaadi451@gmail.com</a>
+          <a href="https://linkedin.com/in/nadeem1128" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://github.com/nadeem1128" target="_blank" rel="noopener">GitHub</a>
+          <a href="tel:+923476919356">+92 347 6919356</a>
+        </div>
+      </div>
+      <div class="wave-wrap" aria-hidden="true">
+        <svg viewBox="0 0 220 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path class="wave-path" d="M4 110 C 30 30, 55 30, 78 80 C 98 122, 118 122, 138 78 C 156 38, 176 38, 194 90 C 202 108, 208 112, 216 100"
+                stroke="var(--signal)" stroke-width="2.2" stroke-linecap="round"/>
+          <circle cx="78" cy="80" r="3" fill="var(--navy)"/>
+          <circle cx="138" cy="78" r="3" fill="var(--navy)"/>
+        </svg>
+      </div>
+    </section>
+
+    <section id="research">
+      <div class="kicker">Research</div>
+      <h2 class="section-title">Undergraduate research, PIEAS</h2>
+      <div class="research-card">
+        <h3>Nonlinear Schrödinger wave dynamics in weakly nonlocal media</h3>
+        <div class="meta">Jul 2023 – Jul 2024 · Integral bifurcation method</div>
+        <p>Derived exact analytical solutions of the weakly nonlocal nonlinear Schrödinger equation, identifying novel soliton, kink, and periodic wave structures relevant to stable optical-communication channels.</p>
+        <div class="pub"><span class="status-dot"></span>"Integral Bifurcation Approach to Solitary and Periodic Wave Solutions in a Weakly Nonlocal Schrödinger Model" — submitted to <em>Journal of Applied Mathematics and Mechanics</em>, under review.</div>
+      </div>
+    </section>
+
+    <section id="work">
+      <div class="kicker">Selected work</div>
+      <h2 class="section-title">Projects</h2>
+
+      <div class="project">
+        <div class="project-head">
+          <h3>Cancer literature retrieval system</h3>
+          <span class="project-year">2025</span>
+        </div>
+        <div class="stack">Python · BM25 · Google Colab · Google Drive</div>
+        <ul>
+          <li>Built a search engine retrieving cancer-related research papers from a hand-curated corpus of 180 documents.</li>
+          <li>Hosted the dataset on Google Drive and mounted it in Colab for a shared, reproducible workflow.</li>
+          <li>Implemented preprocessing, inverted-index construction, and BM25 ranking to surface relevant papers by query.</li>
+        </ul>
+      </div>
+
+      <div class="project">
+        <div class="project-head">
+          <h3>Noise intensity classification system</h3>
+          <span class="project-year">2025</span>
+        </div>
+        <div class="stack">Python · Arduino UNO · Matplotlib · KNN</div>
+        <ul>
+          <li>Collected room-wise acoustic data with an Arduino UNO sensor setup, then cleaned and processed it in Python.</li>
+          <li>Applied a K-Nearest Neighbours classifier to identify the source room from sound signals, visualising patterns with Matplotlib to guide tuning.</li>
+        </ul>
+      </div>
+
+      <div class="project">
+        <div class="project-head">
+          <h3>School database system, grades 1–8</h3>
+          <span class="project-year">2025</span>
+        </div>
+        <div class="stack">SQL · Flask · Python</div>
+        <ul>
+          <li>Designed the ERD and normalised relational schema covering students, teachers, classes, subjects, and results.</li>
+          <li>Built a Flask frontend so staff can add, update, and query academic records through CRUD operations.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="skills">
+      <div class="kicker">Toolkit</div>
+      <h2 class="section-title">Skills</h2>
+
+      <div class="skill-row">
+        <span class="label">Programming</span>
+        <span class="items">Python, SQL, C</span>
+      </div>
+      <div class="skill-row">
+        <span class="label">Data &amp; retrieval</span>
+        <span class="items">Data cleaning, exploratory analysis, BM25 ranking, inverted indexing, KNN classification</span>
+      </div>
+      <div class="skill-row">
+        <span class="label">Tools</span>
+        <span class="items">Google Colab, Flask, Matplotlib, Mathematica, LaTeX, Arduino</span>
+      </div>
+      <div class="skill-row">
+        <span class="label">Foundations</span>
+        <span class="items">Probability &amp; statistics, information retrieval, data structures &amp; algorithms, mathematical modelling</span>
+      </div>
+    </section>
+
+    <section id="education">
+      <div class="kicker">Background</div>
+      <h2 class="section-title">Education</h2>
+
+      <div class="edu-item">
+        <div class="edu-head">
+          <h3>Quaid-e-Azam University (QAU), Islamabad</h3>
+          <span class="edu-when">Sep 2025 – Present</span>
+        </div>
+        <div class="degree">M.S. in Data Science — 3rd semester</div>
+      </div>
+      <div class="edu-item">
+        <div class="edu-head">
+          <h3>Pakistan Institute of Engineering and Applied Sciences (PIEAS)</h3>
+          <span class="edu-when">Sep 2020 – Jul 2024</span>
+        </div>
+        <div class="degree">B.S. in Physics</div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="kicker">Get in touch</div>
+      <h2 class="section-title">Contact</h2>
+      <p style="color:var(--ink-soft); max-width:48ch;">Open to paid internships and freelance work in data cleaning, analysis, and retrieval systems.</p>
+      <div class="contact-grid">
+        <a href="mailto:nadeemaadi451@gmail.com">nadeemaadi451@gmail.com</a>
+        <a href="tel:+923476919356">+92 347 6919356</a>
+        <a href="https://linkedin.com/in/nadeem1128" target="_blank" rel="noopener">linkedin.com/in/nadeem1128</a>
+        <a href="https://github.com/nadeem1128" target="_blank" rel="noopener">github.com/nadeem1128</a>
+      </div>
+    </section>
+
+    <footer>© <span id="year"></span> Muhammad Nadeem · Islamabad, Pakistan</footer>
+  </main>
+</div>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  function toggleTheme(){
+    var root = document.documentElement;
+    var current = root.getAttribute('data-theme');
+    if(current === 'dark'){
+      root.setAttribute('data-theme','light');
+    } else {
+      root.setAttribute('data-theme','dark');
+    }
+  }
+  document.getElementById('toggleTop').addEventListener('click', toggleTheme);
+  document.getElementById('toggleSide').addEventListener('click', toggleTheme);
+
+  // active nav highlight
+  var links = document.querySelectorAll('.rail nav a');
+  var sections = Array.from(links).map(function(l){ return document.querySelector(l.getAttribute('href')); });
+  window.addEventListener('scroll', function(){
+    var pos = window.scrollY + 120;
+    var activeIdx = 0;
+    sections.forEach(function(sec, i){
+      if(sec && sec.offsetTop <= pos) activeIdx = i;
+    });
+    links.forEach(function(l, i){ l.classList.toggle('active', i === activeIdx); });
+  });
+</script>
+
+</body>
+</html>
